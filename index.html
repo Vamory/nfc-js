@@ -139,6 +139,15 @@ if (!("NDEFReader" in window))
     ndef.addEventListener("reading", ({ message, serialNumber }) => {
       log(`> Serial Number: ${serialNumber}`);
       log(`> Records: (${message.records.length})`);
+      for (const record of message.records) {
+        log("Record type:  " + record.recordType);
+        log("MIME type:    " + record.mediaType);
+        log("Record id:    " + record.id);
+        const textDecoder = new TextDecoder(record.encoding);
+        log(`Text: ${textDecoder.decode(record.data)} (${record.lang})`);
+      }
+
+      log()
     });
   } catch (error) {
     log("Argh! " + error);
